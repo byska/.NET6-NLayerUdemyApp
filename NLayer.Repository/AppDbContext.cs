@@ -29,7 +29,7 @@ namespace NLayer.Repository
                 Color = "Kırmızı",
                 Height = 100,
                 Width = 200,
-                ProductId = 2,
+                ProductId = 1,
             },
             new ProductFeature()
             {
@@ -37,7 +37,7 @@ namespace NLayer.Repository
                 Color = "Mavi",
                 Height = 300,
                 Width = 200,
-                ProductId = 3,
+                ProductId = 2,
             });
 
             base.OnModelCreating(modelBuilder);
