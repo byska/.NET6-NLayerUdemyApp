@@ -3,12 +3,7 @@ using NLayer.Core.Repositories;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
 using NLayer.Service.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayer.Service.Services
 {
@@ -23,7 +18,7 @@ namespace NLayer.Service.Services
         }
         public async Task<T> AddAsync(T entity)
         {
-           await _repository.AddAsync(entity);
+            await _repository.AddAsync(entity);
             await _uow.CommitAsync();
             return entity;
         }
@@ -35,16 +30,16 @@ namespace NLayer.Service.Services
             return entities;
         }
 
-        public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression)=> await _repository.AnyAsync(expression);
-       
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> expression) => await _repository.AnyAsync(expression);
 
-        public async Task<IEnumerable<T>> GetAllAsync()=> await _repository.GetAll().ToListAsync();
+
+        public async Task<IEnumerable<T>> GetAllAsync() => await _repository.GetAll().ToListAsync();
 
 
         public async Task<T> GetByIdAsync(int id)
         {
-           var has = await _repository.GetByIdAsync(id);
-            if(has == null)
+            var has = await _repository.GetByIdAsync(id);
+            if (has == null)
             {
                 throw new NotFoundException($"{typeof(T).Name}({id}) does not exist");
             }
@@ -53,8 +48,8 @@ namespace NLayer.Service.Services
 
         public async Task RemoveAsync(T entity)
         {
-           _repository.Remove(entity);
-            await _uow.CommitAsync();   
+            _repository.Remove(entity);
+            await _uow.CommitAsync();
         }
 
         public async Task RemoveRangeAsync(IEnumerable<T> entities)
@@ -71,7 +66,7 @@ namespace NLayer.Service.Services
 
         public IQueryable<T> Where(Expression<Func<T, bool>> expression)
         {
-           return _repository.Where(expression);
+            return _repository.Where(expression);
         }
     }
 }

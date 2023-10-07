@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NLayer.Core
+﻿namespace NLayer.Core
 {
-    public class Category:BaseEntity
+    public class Category : BaseEntity
     {
         public Category()
         {
-            Products=new HashSet<Product>();
+            Products = new HashSet<Product>();
         }
         public string Name { get; set; }
 

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using NLayer.Core;
 using NLayer.Core.DTOs;
@@ -7,12 +6,7 @@ using NLayer.Core.Repositories;
 using NLayer.Core.Services;
 using NLayer.Core.UnitOfWorks;
 using NLayer.Service.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NLayer.Caching
 {
@@ -51,32 +45,32 @@ namespace NLayer.Caching
             return entities;
         }
 
-        public  Task<bool> AnyAsync(Expression<Func<Product, bool>> expression)
+        public Task<bool> AnyAsync(Expression<Func<Product, bool>> expression)
         {
-           return Task.FromResult(_memoryCache.Get<List<Product>>(CacheProductKey).Any(expression.Compile()));
+            return Task.FromResult(_memoryCache.Get<List<Product>>(CacheProductKey).Any(expression.Compile()));
         }
 
         public Task<IEnumerable<Product>> GetAllAsync()
         {
-           return Task.FromResult(_memoryCache.Get<IEnumerable<Product>>(CacheProductKey));
+            return Task.FromResult(_memoryCache.Get<IEnumerable<Product>>(CacheProductKey));
         }
 
         public Task<Product> GetByIdAsync(int id)
         {
-            var product =_memoryCache.Get<List<Product>>(CacheProductKey).FirstOrDefault(x=> x.Id == id);
-            if(product == null)
+            var product = _memoryCache.Get<List<Product>>(CacheProductKey).FirstOrDefault(x => x.Id == id);
+            if (product == null)
             {
                 throw new NotFoundException($"({id}) not found.");
             }
             return Task.FromResult(product);
         }
 
-        public Task<CustomResponseDTO<List<ProductWithCategoryDTO>>> GetProductsWithCategory()
+        public Task<List<ProductWithCategoryDTO>> GetProductsWithCategory()
         {
             var products = _memoryCache.Get<List<Product>>(CacheProductKey);
-            var productsWithCategoryDto= _mapper.Map<List<ProductWithCategoryDTO>>(products);
+            var productsWithCategoryDto = _mapper.Map<List<ProductWithCategoryDTO>>(products);
 
-            return Task.FromResult(CustomResponseDTO<List<ProductWithCategoryDTO>>.Success(200,productsWithCategoryDto));
+            return Task.FromResult(productsWithCategoryDto);
         }
 
         public async Task RemoveAsync(Product entity)
@@ -102,12 +96,12 @@ namespace NLayer.Caching
 
         public IQueryable<Product> Where(Expression<Func<Product, bool>> expression)
         {
-            return _memoryCache.Get<List<Product>>(CacheProductKey).Where(expression.Compile()).AsQueryable(); 
+            return _memoryCache.Get<List<Product>>(CacheProductKey).Where(expression.Compile()).AsQueryable();
         }
 
         public async Task CacheAllProductsAsync()
         {
-            _memoryCache.Set(CacheProductKey,await _repository.GetProductsWithCategory());
+            _memoryCache.Set(CacheProductKey, await _repository.GetProductsWithCategory());
         }
     }
 }

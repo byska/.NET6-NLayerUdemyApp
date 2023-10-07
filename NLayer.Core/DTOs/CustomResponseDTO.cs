@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace NLayer.Core.DTOs
 {
@@ -15,13 +9,13 @@ namespace NLayer.Core.DTOs
         public int StatusCode { get; set; }
         public List<string> Errors { get; set; }
 
-        public static CustomResponseDTO<T> Success(int  statusCode,T data)
+        public static CustomResponseDTO<T> Success(int statusCode, T data)
         {
-            return new CustomResponseDTO<T> { StatusCode = statusCode, Data = data, Errors=null };
+            return new CustomResponseDTO<T> { StatusCode = statusCode, Data = data, Errors = null };
         }
         public static CustomResponseDTO<T> Success(int statusCode)
         {
-            return new CustomResponseDTO<T> { StatusCode = statusCode};
+            return new CustomResponseDTO<T> { StatusCode = statusCode };
         }
         public static CustomResponseDTO<T> Fail(int statusCode, List<string> errors)
         {
