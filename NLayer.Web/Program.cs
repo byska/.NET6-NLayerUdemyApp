@@ -7,6 +7,7 @@ using NLayer.Repository;
 using NLayer.Service.Mapping;
 using NLayer.Service.Validation;
 using NLayer.Web.Modules;
+using NLayer.Web.Services;
 using System.Reflection;
 
 namespace NLayer.Web
@@ -28,6 +29,16 @@ namespace NLayer.Web
                 {
                     options.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
                 });
+            });
+
+            builder.Services.AddHttpClient<ProductApiService>(opt =>
+            {
+                opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
+            });
+
+            builder.Services.AddHttpClient<CategoryApiService>(opt =>
+            {
+                opt.BaseAddress = new Uri(builder.Configuration["BaseUrl"]);
             });
 
             builder.Services.AddScoped(typeof(NotFoundFilter<>));
