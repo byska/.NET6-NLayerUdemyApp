@@ -22,7 +22,6 @@ namespace NLayer.Web.Controllers
         {
             return View(await _service.GetProductsWithCategory());
         }
-
         public async Task<IActionResult> Save()
         {
             var categories = await _categoryService.GetAllAsync();
