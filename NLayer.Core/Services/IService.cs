@@ -18,5 +18,6 @@ namespace NLayer.Core.Services
         Task UpdateAsync(T entity);
         Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities);
+
     }
 }
